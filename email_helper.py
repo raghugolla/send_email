@@ -3,8 +3,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from typing import Dict, List
 
-SENDER_EMAIL = "1206chandrasekhar@gmail.com"
-SENDER_PASSWORD = "Newyear@2019"
+SENDER_EMAIL = "**************"
+SENDER_PASSWORD = "********"
 
 
 def get_body(

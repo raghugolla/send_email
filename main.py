@@ -10,7 +10,7 @@ from email_helper import send_email
 from dateutil import parser as datetime_parser
 from datetime import datetime, timezone
 
-MASTER_MAIL = "1206chandrasekhar@gmail.com"
+MASTER_MAIL = "**************"
 THRESHLOLD_DAYS = 2
 
 
@@ -34,7 +34,7 @@ def send_mail(record, days_diff: int) -> str:
     now = datetime.now(timezone.utc)
     if (now - password_changed_time).days > days_diff - THRESHLOLD_DAYS:
         for mail in record.get("mail"):
-            send_email(receiver_email=mail, subject="Email Reset Notification")
+            send_email(receiver_email=mail, subject="Email Reset Notification | UID: %s" % record.get("uid")[0])
         return "Successfully Send email"
     return "Not needed"
 
