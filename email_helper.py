@@ -1,21 +1,8 @@
-import smtplib, ssl
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 from typing import Dict, List
-
-SENDER_EMAIL = "**************"
-SENDER_PASSWORD = "********"
+import os
 
 
-def get_body(
-    receiver_email: str,
-    data: List[Dict] = None,
-    subject: str = "Email Reset Notification",
-):
-    message = MIMEMultipart("alternative")
-    message["Subject"] = subject
-    message["From"] = SENDER_EMAIL
-    message["To"] = receiver_email
+def get_body(data: List[Dict] = None):
     if data:
         text = f"""\
                        Hi,
@@ -47,18 +34,9 @@ def get_body(
           </body>
         </html>
         """
-
-    part1 = MIMEText(text, "plain")
-    part2 = MIMEText(html, "html")
-
-    message.attach(part1)
-    message.attach(part2)
-    return message
+    return text
 
 
-def send_email(receiver_email: str, data: List = None, subject: str = None):
-    message = get_body(receiver_email=receiver_email, data=data, subject=subject)
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login(SENDER_EMAIL, SENDER_PASSWORD)
-        server.sendmail(SENDER_EMAIL, receiver_email, message.as_string())
+def send_os_mail(receiver_email: str, data: List = None, subject: str = None):
+    os.system("echo '%s' | mailx -s '%s' %s" % (get_body(), subject, receiver_email))
+    pass
